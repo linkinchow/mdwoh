@@ -1,0 +1,13 @@
+{
+	"name": "southridge_cloudsales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "southridge_cloudsales",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[dbo].[Orders]"
+		}
+	}
+}
