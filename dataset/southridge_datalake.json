@@ -1,0 +1,23 @@
+{
+	"name": "southridge_datalake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "southridge_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureBlobFSFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": "orders.csv",
+			"folderPath": "southridge/southridge/cloudsales"
+		}
+	}
+}
