@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "southridge-adf"
+		},
+		"southridge_cloudsales_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'southridge_cloudsales'"
+		},
+		"southridge_cloudstreaming_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'southridge_cloudstreaming'"
+		},
+		"southridge_datalake_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'southridge_datalake'"
+		},
+		"southridge_datalake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://southridgesa.dfs.core.windows.net"
+		},
+		"southridge_datalake_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "orders.csv"
+		},
+		"southridge_datalake_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "southridge/southridge/cloudsales"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas Token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"southridge_cloudsales_connectionString": {
+						"value": "[parameters('southridge_cloudsales_connectionString')]"
+					},
+					"southridge_cloudstreaming_connectionString": {
+						"value": "[parameters('southridge_cloudstreaming_connectionString')]"
+					},
+					"southridge_datalake_accountKey": {
+						"value": "[parameters('southridge_datalake_accountKey')]"
+					},
+					"southridge_datalake_properties_typeProperties_url": {
+						"value": "[parameters('southridge_datalake_properties_typeProperties_url')]"
+					},
+					"southridge_datalake_properties_typeProperties_fileName": {
+						"value": "[parameters('southridge_datalake_properties_typeProperties_fileName')]"
+					},
+					"southridge_datalake_properties_typeProperties_folderPath": {
+						"value": "[parameters('southridge_datalake_properties_typeProperties_folderPath')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
