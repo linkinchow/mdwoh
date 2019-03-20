@@ -1,0 +1,13 @@
+{
+	"name": "southridge_movies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "southridge_movies",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DocumentDbCollection",
+		"typeProperties": {
+			"collectionName": "movies"
+		}
+	}
+}
