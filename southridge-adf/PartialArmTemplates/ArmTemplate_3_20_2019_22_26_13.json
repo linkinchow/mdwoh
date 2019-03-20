@@ -6,30 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory Name",
 			"defaultValue": "southridge-adf"
-		},
-		"southridge_cloudsales_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'southridge_cloudsales'"
-		},
-		"southridge_cloudstreaming_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'southridge_cloudstreaming'"
-		},
-		"southridge_datalake_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'southridge_datalake'"
-		},
-		"southridge_datalake_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@dataset().cw_fileName"
-		},
-		"southridge_datalake_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "southridge/southridge/cloudsales"
-		},
-		"southridge_datalake_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://southridgesa.dfs.core.windows.net"
 		}
 	},
 	"variables": {
@@ -45,8 +21,6 @@
 					{
 						"name": "copy_cloudsales",
 						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
 						"typeProperties": {
 							"items": {
 								"value": "@pipeline().parameters.cw_items",
@@ -56,7 +30,6 @@
 								{
 									"name": "copy_data",
 									"type": "Copy",
-									"dependsOn": [],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
@@ -64,7 +37,6 @@
 										"secureOutput": false,
 										"secureInput": false
 									},
-									"userProperties": [],
 									"typeProperties": {
 										"source": {
 											"type": "SqlSource"
@@ -141,8 +113,7 @@
 							}
 						]
 					}
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/southridge_cloudsales')]",
@@ -163,7 +134,6 @@
 						"type": "String"
 					}
 				},
-				"annotations": [],
 				"type": "AzureSqlTable",
 				"typeProperties": {
 					"tableName": {
@@ -171,10 +141,7 @@
 						"type": "Expression"
 					}
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/southridge_cloudsales')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/southridge_datalake')]",
@@ -190,7 +157,6 @@
 						"type": "String"
 					}
 				},
-				"annotations": [],
 				"type": "AzureBlobFSFile",
 				"typeProperties": {
 					"format": {
@@ -203,58 +169,12 @@
 						"firstRowAsHeader": true
 					},
 					"fileName": {
-						"value": "[parameters('southridge_datalake_properties_typeProperties_fileName')]",
+						"value": "@dataset().cw_fileName",
 						"type": "Expression"
 					},
-					"folderPath": "[parameters('southridge_datalake_properties_typeProperties_folderPath')]"
+					"folderPath": "southridge/southridge/cloudsales"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/southridge_datalake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_cloudsales')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('southridge_cloudsales_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_cloudstreaming')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('southridge_cloudstreaming_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_datalake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('southridge_datalake_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('southridge_datalake_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
+			}
 		}
 	]
 }

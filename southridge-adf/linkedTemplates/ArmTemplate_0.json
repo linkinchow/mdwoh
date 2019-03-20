@@ -25,7 +25,7 @@
 		},
 		"southridge_datalake_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "orders.csv"
+			"defaultValue": "@dataset().cw_fileName"
 		},
 		"southridge_datalake_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -88,10 +88,18 @@
 					"referenceName": "southridge_cloudsales",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"cw_tableName": {
+						"type": "String"
+					}
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"typeProperties": {
-					"tableName": "[concat('[', 'dbo].[Orders]')]"
+					"tableName": {
+						"value": "@dataset().cw_tableName",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": [
@@ -107,6 +115,11 @@
 					"referenceName": "southridge_datalake",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"cw_fileName": {
+						"type": "String"
+					}
+				},
 				"annotations": [],
 				"type": "AzureBlobFSFile",
 				"typeProperties": {
@@ -119,7 +132,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
-					"fileName": "[parameters('southridge_datalake_properties_typeProperties_fileName')]",
+					"fileName": {
+						"value": "[parameters('southridge_datalake_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
 					"folderPath": "[parameters('southridge_datalake_properties_typeProperties_folderPath')]"
 				}
 			},
@@ -128,48 +144,111 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/southridge')]",
+			"name": "[concat(parameters('factoryName'), '/southridge_copy_data')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "copy cloud sales",
-						"type": "Copy",
+						"name": "copy_cloudsales",
+						"type": "ForEach",
 						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "SqlSource"
+							"items": {
+								"value": "@pipeline().parameters.cw_items",
+								"type": "Expression"
 							},
-							"sink": {
-								"type": "AzureBlobFSSink"
+							"activities": [
+								{
+									"name": "copy_data",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "SqlSource"
+										},
+										"sink": {
+											"type": "AzureBlobFSSink"
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "southridge_cloudsales",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_tableName": {
+													"value": "@item().source.tableName",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "southridge_datalake",
+											"type": "DatasetReference",
+											"parameters": {
+												"cw_fileName": {
+													"value": "@item().destination.fileName",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"parameters": {
+					"cw_items": {
+						"type": "Array",
+						"defaultValue": [
+							{
+								"source": {
+									"tableName": "[concat('[', 'dbo].[Addresses]')]"
+								},
+								"destination": {
+									"fileName": "Addresses.csv"
+								}
 							},
-							"enableStaging": false
-						},
-						"inputs": [
 							{
-								"referenceName": "southridge_cloudsales",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
+								"source": {
+									"tableName": "[concat('[', 'dbo].[Customers]')]"
+								},
+								"destination": {
+									"fileName": "Customers.csv"
+								}
+							},
 							{
-								"referenceName": "southridge_datalake",
-								"type": "DatasetReference",
-								"parameters": {}
+								"source": {
+									"tableName": "[concat('[', 'dbo].[OrderDetails]')]"
+								},
+								"destination": {
+									"fileName": "OrderDetails.csv"
+								}
+							},
+							{
+								"source": {
+									"tableName": "[concat('[', 'dbo].[Orders]')]"
+								},
+								"destination": {
+									"fileName": "Orders.csv"
+								}
 							}
 						]
 					}
-				],
+				},
 				"annotations": []
 			},
 			"dependsOn": [

@@ -14,14 +14,14 @@
 		"southridge_datalake_accountKey": {
 			"value": ""
 		},
-		"southridge_datalake_properties_typeProperties_url": {
-			"value": "https://southridgesa.dfs.core.windows.net"
-		},
 		"southridge_datalake_properties_typeProperties_fileName": {
-			"value": "orders.csv"
+			"value": "@dataset().cw_fileName"
 		},
 		"southridge_datalake_properties_typeProperties_folderPath": {
 			"value": "southridge/southridge/cloudsales"
+		},
+		"southridge_datalake_properties_typeProperties_url": {
+			"value": "https://southridgesa.dfs.core.windows.net"
 		}
 	}
 }

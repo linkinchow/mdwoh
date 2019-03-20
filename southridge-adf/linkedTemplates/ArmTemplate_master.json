@@ -19,17 +19,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'southridge_datalake'"
 		},
-		"southridge_datalake_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://southridgesa.dfs.core.windows.net"
-		},
 		"southridge_datalake_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "orders.csv"
+			"defaultValue": "@dataset().cw_fileName"
 		},
 		"southridge_datalake_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "southridge/southridge/cloudsales"
+		},
+		"southridge_datalake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://southridgesa.dfs.core.windows.net"
 		},
 		"containerUri": {
 			"type": "string",
