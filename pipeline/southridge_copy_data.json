@@ -103,7 +103,7 @@
 			},
 			"cw_folder": {
 				"type": "String",
-				"defaultValue": "cloudsales"
+				"defaultValue": "southridge/southridge/cloudsales"
 			}
 		}
 	}

@@ -24,8 +24,11 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": "@dataset().cw_folder/@dataset().cw_fileName",
-			"folderPath": "southridge/southridge"
+			"fileName": "@dataset().cw_fileName",
+			"folderPath": {
+				"value": "@dataset().cw_folder",
+				"type": "Expression"
+			}
 		}
 	}
 }
