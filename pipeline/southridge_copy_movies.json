@@ -13,8 +13,31 @@
 					"secureInput": false
 				},
 				"typeProperties": {
+					"source": {
+						"type": "DocumentDbCollectionSource",
+						"nestingSeparator": "."
+					},
+					"sink": {
+						"type": "AzureBlobFSSink"
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "southridge_movies",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "southridge_datalake",
+						"type": "DatasetReference",
+						"parameters": {
+							"cw_fileName": "Movies.json",
+							"cw_folder": "southridge/southridge/movies"
+						}
+					}
+				]
 			}
 		]
 	}
