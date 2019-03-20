@@ -1,3 +1,11 @@
 {
-	"name": "southridge_copy_data"
+	"name": "southridge_copy_data",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_cloudsales",
+				"type": "ForEach"
+			}
+		]
+	}
 }
