@@ -30,12 +30,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "southridge_datalake",
-						"type": "DatasetReference",
-						"parameters": {
-							"cw_fileName": "Movies.json",
-							"cw_folder": "southridge/southridge/movies"
-						}
+						"referenceName": "southridge_datalake_movies",
+						"type": "DatasetReference"
 					}
 				]
 			}
