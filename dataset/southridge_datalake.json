@@ -5,6 +5,11 @@
 			"referenceName": "southridge_datalake",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"cw_fileName": {
+				"type": "String"
+			}
+		},
 		"type": "AzureBlobFSFile",
 		"typeProperties": {
 			"format": {
@@ -16,7 +21,10 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": "orders.csv",
+			"fileName": {
+				"value": "@dataset().cw_fileName",
+				"type": "Expression"
+			},
 			"folderPath": "southridge/southridge/cloudsales"
 		}
 	}
