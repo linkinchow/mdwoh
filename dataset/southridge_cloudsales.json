@@ -5,9 +5,17 @@
 			"referenceName": "southridge_cloudsales",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"cw_tableName": {
+				"type": "String"
+			}
+		},
 		"type": "AzureSqlTable",
 		"typeProperties": {
-			"tableName": "[dbo].[Orders]"
+			"tableName": {
+				"value": "@dataset().cw_tableName",
+				"type": "Expression"
+			}
 		}
 	}
 }
