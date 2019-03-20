@@ -1,0 +1,32 @@
+{
+	"name": "southridge_datalake_movies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "southridge_datalake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_fileName": {
+				"type": "String"
+			},
+			"cw_folder": {
+				"type": "String"
+			}
+		},
+		"type": "AzureBlobFSFile",
+		"typeProperties": {
+			"format": {
+				"type": "JsonFormat",
+				"filePattern": "arrayOfObjects"
+			},
+			"fileName": {
+				"value": "@dataset().cw_fileName",
+				"type": "Expression"
+			},
+			"folderPath": {
+				"value": "@dataset().cw_folder",
+				"type": "Expression"
+			}
+		}
+	}
+}
