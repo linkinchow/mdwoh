@@ -8,6 +8,9 @@
 		"parameters": {
 			"cw_fileName": {
 				"type": "String"
+			},
+			"cw_folder": {
+				"type": "String"
 			}
 		},
 		"type": "AzureBlobFSFile",
@@ -25,7 +28,7 @@
 				"value": "@dataset().cw_fileName",
 				"type": "Expression"
 			},
-			"folderPath": "southridge/southridge/cloudsales"
+			"folderPath": "southridge/southridge/@dataset().cw_folder"
 		}
 	}
 }

@@ -50,6 +50,10 @@
 										"cw_fileName": {
 											"value": "@item().destination.fileName",
 											"type": "Expression"
+										},
+										"cw_folder": {
+											"value": "@pipeline().parameters.cw_folder",
+											"type": "Expression"
 										}
 									}
 								}
@@ -96,6 +100,10 @@
 						}
 					}
 				]
+			},
+			"cw_folder": {
+				"type": "String",
+				"defaultValue": "cloudsales"
 			}
 		}
 	}
