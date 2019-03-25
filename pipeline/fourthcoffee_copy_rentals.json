@@ -1,0 +1,127 @@
+{
+	"name": "fourthcoffee_copy_rentals",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_rentals",
+				"type": "ForEach",
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "copy_data",
+							"type": "Copy",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"typeProperties": {
+								"source": {
+									"type": "FileSystemSource",
+									"recursive": false
+								},
+								"sink": {
+									"type": "AzureBlobFSSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "fourthcoffee_rentals",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": {
+											"value": "@item().source.fileName",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "southridge_datalake",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_fileName": {
+											"value": "@item().destination.fileName",
+											"type": "Expression"
+										},
+										"cw_folder": {
+											"value": "@pipeline().parameters.cw_folder",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"fileName": "Actors.csv"
+						},
+						"destination": {
+							"fileName": "Actors.csv"
+						}
+					},
+					{
+						"source": {
+							"fileName": "Customers.csv"
+						},
+						"destination": {
+							"fileName": "Customers.csv"
+						}
+					},
+					{
+						"source": {
+							"fileName": "MovieActors.csv"
+						},
+						"destination": {
+							"fileName": "MovieActors.csv"
+						}
+					},
+					{
+						"source": {
+							"fileName": "Movies.csv"
+						},
+						"destination": {
+							"fileName": "Movies.csv"
+						}
+					},
+					{
+						"source": {
+							"fileName": "OnlineMovieMappings.csv"
+						},
+						"destination": {
+							"fileName": "OnlineMovieMappings.csv"
+						}
+					},
+					{
+						"source": {
+							"fileName": "Transactions.csv"
+						},
+						"destination": {
+							"fileName": "Transactions.csv"
+						}
+					}
+				]
+			},
+			"cw_folder": {
+				"type": "String",
+				"defaultValue": "southridge/fourthcoffee"
+			}
+		}
+	}
+}
