@@ -1,0 +1,21 @@
+{
+	"name": "vanarsdel_rentals",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "vanarsdel_rentals",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_tableName": {
+				"type": "String"
+			}
+		},
+		"type": "SqlServerTable",
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().cw_tableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
