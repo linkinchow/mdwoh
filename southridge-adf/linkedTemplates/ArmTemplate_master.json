@@ -7,6 +7,16 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "southridge-adf"
 		},
+		"integrationRuntime_VanArsdelIntegrationRuntime": {
+			"type": "string",
+			"metadata": "Integration Runtime Name",
+			"defaultValue": "VanArsdelIntegrationRuntime"
+		},
+		"integrationRuntime_FourthCoffeeIntegrationRuntime": {
+			"type": "string",
+			"metadata": "Integration Runtime Name",
+			"defaultValue": "FourthCoffeeIntegrationRuntime"
+		},
 		"southridge_cloudsales_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'southridge_cloudsales'"
@@ -19,17 +29,45 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'southridge_datalake'"
 		},
+		"southridge_movies_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'southridge_movies'"
+		},
+		"vanarsdel_rentals_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'vanarsdel_rentals'"
+		},
+		"fourthcoffee_rentals_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'fourthcoffee_rentals'"
+		},
 		"southridge_datalake_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@dataset().cw_fileName"
 		},
 		"southridge_datalake_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "southridge/southridge/cloudsales"
+			"defaultValue": "@dataset().cw_folder"
+		},
+		"southridge_datalake_movies_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "Movies.json"
+		},
+		"southridge_datalake_movies_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "southridge/southridge/movies"
 		},
 		"southridge_datalake_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://southridgesa.dfs.core.windows.net"
+		},
+		"fourthcoffee_rentals_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "openhackadmin"
+		},
+		"fourthcoffee_rentals_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@dataset().cw_fileName"
 		},
 		"containerUri": {
 			"type": "string",
@@ -58,6 +96,12 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"integrationRuntime_VanArsdelIntegrationRuntime": {
+						"value": "[parameters('integrationRuntime_VanArsdelIntegrationRuntime')]"
+					},
+					"integrationRuntime_FourthCoffeeIntegrationRuntime": {
+						"value": "[parameters('integrationRuntime_FourthCoffeeIntegrationRuntime')]"
+					},
 					"southridge_cloudsales_connectionString": {
 						"value": "[parameters('southridge_cloudsales_connectionString')]"
 					},
@@ -67,6 +111,15 @@
 					"southridge_datalake_accountKey": {
 						"value": "[parameters('southridge_datalake_accountKey')]"
 					},
+					"southridge_movies_connectionString": {
+						"value": "[parameters('southridge_movies_connectionString')]"
+					},
+					"vanarsdel_rentals_connectionString": {
+						"value": "[parameters('vanarsdel_rentals_connectionString')]"
+					},
+					"fourthcoffee_rentals_password": {
+						"value": "[parameters('fourthcoffee_rentals_password')]"
+					},
 					"southridge_datalake_properties_typeProperties_url": {
 						"value": "[parameters('southridge_datalake_properties_typeProperties_url')]"
 					},
@@ -75,6 +128,18 @@
 					},
 					"southridge_datalake_properties_typeProperties_folderPath": {
 						"value": "[parameters('southridge_datalake_properties_typeProperties_folderPath')]"
+					},
+					"southridge_datalake_movies_properties_typeProperties_fileName": {
+						"value": "[parameters('southridge_datalake_movies_properties_typeProperties_fileName')]"
+					},
+					"southridge_datalake_movies_properties_typeProperties_folderPath": {
+						"value": "[parameters('southridge_datalake_movies_properties_typeProperties_folderPath')]"
+					},
+					"fourthcoffee_rentals_properties_typeProperties_userId": {
+						"value": "[parameters('fourthcoffee_rentals_properties_typeProperties_userId')]"
+					},
+					"fourthcoffee_rentals_properties_typeProperties_fileName": {
+						"value": "[parameters('fourthcoffee_rentals_properties_typeProperties_fileName')]"
 					}
 				}
 			},

@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "southridge-adf"
 		},
+		"integrationRuntime_VanArsdelIntegrationRuntime": {
+			"value": "VanArsdelIntegrationRuntime"
+		},
+		"integrationRuntime_FourthCoffeeIntegrationRuntime": {
+			"value": "FourthCoffeeIntegrationRuntime"
+		},
 		"southridge_cloudsales_connectionString": {
 			"value": ""
 		},
@@ -14,14 +20,35 @@
 		"southridge_datalake_accountKey": {
 			"value": ""
 		},
+		"southridge_movies_connectionString": {
+			"value": ""
+		},
+		"vanarsdel_rentals_connectionString": {
+			"value": ""
+		},
+		"fourthcoffee_rentals_password": {
+			"value": ""
+		},
 		"southridge_datalake_properties_typeProperties_fileName": {
 			"value": "@dataset().cw_fileName"
 		},
 		"southridge_datalake_properties_typeProperties_folderPath": {
-			"value": "southridge/southridge/cloudsales"
+			"value": "@dataset().cw_folder"
+		},
+		"southridge_datalake_movies_properties_typeProperties_fileName": {
+			"value": "Movies.json"
+		},
+		"southridge_datalake_movies_properties_typeProperties_folderPath": {
+			"value": "southridge/southridge/movies"
 		},
 		"southridge_datalake_properties_typeProperties_url": {
 			"value": "https://southridgesa.dfs.core.windows.net"
+		},
+		"fourthcoffee_rentals_properties_typeProperties_userId": {
+			"value": "openhackadmin"
+		},
+		"fourthcoffee_rentals_properties_typeProperties_fileName": {
+			"value": "@dataset().cw_fileName"
 		}
 	}
 }

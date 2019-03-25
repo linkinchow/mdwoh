@@ -6,68 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory Name",
 			"defaultValue": "southridge-adf"
-		},
-		"integrationRuntime_VanArsdelIntegrationRuntime": {
-			"type": "string",
-			"metadata": "Integration Runtime Name",
-			"defaultValue": "VanArsdelIntegrationRuntime"
-		},
-		"integrationRuntime_FourthCoffeeIntegrationRuntime": {
-			"type": "string",
-			"metadata": "Integration Runtime Name",
-			"defaultValue": "FourthCoffeeIntegrationRuntime"
-		},
-		"southridge_cloudsales_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'southridge_cloudsales'"
-		},
-		"southridge_cloudstreaming_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'southridge_cloudstreaming'"
-		},
-		"southridge_datalake_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'southridge_datalake'"
-		},
-		"southridge_movies_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'southridge_movies'"
-		},
-		"vanarsdel_rentals_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'vanarsdel_rentals'"
-		},
-		"fourthcoffee_rentals_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'fourthcoffee_rentals'"
-		},
-		"southridge_datalake_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@dataset().cw_fileName"
-		},
-		"southridge_datalake_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "@dataset().cw_folder"
-		},
-		"southridge_datalake_movies_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "Movies.json"
-		},
-		"southridge_datalake_movies_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "southridge/southridge/movies"
-		},
-		"southridge_datalake_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://southridgesa.dfs.core.windows.net"
-		},
-		"fourthcoffee_rentals_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "openhackadmin"
-		},
-		"fourthcoffee_rentals_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@dataset().cw_fileName"
 		}
 	},
 	"variables": {
@@ -83,8 +21,6 @@
 					{
 						"name": "copy_cloudsales",
 						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
 						"typeProperties": {
 							"items": {
 								"value": "@pipeline().parameters.cw_items",
@@ -94,7 +30,6 @@
 								{
 									"name": "copy_data",
 									"type": "Copy",
-									"dependsOn": [],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
@@ -102,7 +37,6 @@
 										"secureOutput": false,
 										"secureInput": false
 									},
-									"userProperties": [],
 									"typeProperties": {
 										"source": {
 											"type": "SqlSource"
@@ -187,11 +121,9 @@
 						"type": "String",
 						"defaultValue": "southridge/southridge/cloudsales"
 					}
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/southridge_cloudsales')]",
 				"[concat(variables('factoryId'), '/datasets/southridge_datalake')]"
 			]
 		},
@@ -204,8 +136,6 @@
 					{
 						"name": "copy_cloudstreaming",
 						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
 						"typeProperties": {
 							"items": {
 								"value": "@pipeline().parameters.cw_items",
@@ -215,7 +145,6 @@
 								{
 									"name": "copy_data",
 									"type": "Copy",
-									"dependsOn": [],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
@@ -223,7 +152,6 @@
 										"secureOutput": false,
 										"secureInput": false
 									},
-									"userProperties": [],
 									"typeProperties": {
 										"source": {
 											"type": "SqlSource"
@@ -300,8 +228,7 @@
 						"type": "String",
 						"defaultValue": "southridge/southridge/cloudstreaming"
 					}
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/southridge_cloudstreaming')]",
@@ -317,7 +244,6 @@
 					{
 						"name": "copy_movies",
 						"type": "Copy",
-						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -325,7 +251,6 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
 						"typeProperties": {
 							"source": {
 								"type": "DocumentDbCollectionSource",
@@ -339,51 +264,21 @@
 						"inputs": [
 							{
 								"referenceName": "southridge_movies",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "southridge_datalake_movies",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/southridge_movies')]",
 				"[concat(variables('factoryId'), '/datasets/southridge_datalake_movies')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_cloudsales')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "southridge_cloudsales",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"cw_tableName": {
-						"type": "String"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": {
-						"value": "@dataset().cw_tableName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/southridge_cloudsales')]"
 			]
 		},
 		{
@@ -400,7 +295,6 @@
 						"type": "String"
 					}
 				},
-				"annotations": [],
 				"type": "AzureSqlTable",
 				"typeProperties": {
 					"tableName": {
@@ -408,10 +302,7 @@
 						"type": "Expression"
 					}
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/southridge_cloudstreaming')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/southridge_datalake')]",
@@ -430,7 +321,6 @@
 						"type": "String"
 					}
 				},
-				"annotations": [],
 				"type": "AzureBlobFSFile",
 				"typeProperties": {
 					"format": {
@@ -443,18 +333,15 @@
 						"firstRowAsHeader": true
 					},
 					"fileName": {
-						"value": "[parameters('southridge_datalake_properties_typeProperties_fileName')]",
+						"value": "@dataset().cw_fileName",
 						"type": "Expression"
 					},
 					"folderPath": {
-						"value": "[parameters('southridge_datalake_properties_typeProperties_folderPath')]",
+						"value": "@dataset().cw_folder",
 						"type": "Expression"
 					}
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/southridge_datalake')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/southridge_datalake_movies')]",
@@ -465,20 +352,16 @@
 					"referenceName": "southridge_datalake",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "AzureBlobFSFile",
 				"typeProperties": {
 					"format": {
 						"type": "JsonFormat",
 						"filePattern": "arrayOfObjects"
 					},
-					"fileName": "[parameters('southridge_datalake_movies_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('southridge_datalake_movies_properties_typeProperties_folderPath')]"
+					"fileName": "Movies.json",
+					"folderPath": "southridge/southridge/movies"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/southridge_datalake')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/southridge_movies')]",
@@ -489,134 +372,11 @@
 					"referenceName": "southridge_movies",
 					"type": "LinkedServiceReference"
 				},
-				"annotations": [],
 				"type": "DocumentDbCollection",
 				"typeProperties": {
 					"collectionName": "movies"
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/southridge_movies')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_cloudsales')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('southridge_cloudsales_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_cloudstreaming')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('southridge_cloudstreaming_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_datalake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('southridge_datalake_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('southridge_datalake_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/southridge_movies')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "CosmosDb",
-				"typeProperties": {
-					"connectionString": "[parameters('southridge_movies_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/', parameters('integrationRuntime_VanArsdelIntegrationRuntime'))]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/', parameters('integrationRuntime_FourthCoffeeIntegrationRuntime'))]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/vanarsdel_rentals')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('vanarsdel_rentals_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "[parameters('integrationRuntime_VanArsdelIntegrationRuntime')]",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/', parameters('integrationRuntime_VanArsdelIntegrationRuntime'))]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/fourthcoffee_rentals')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "C:\\Rentals",
-					"userId": "[parameters('fourthcoffee_rentals_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('fourthcoffee_rentals_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "[parameters('integrationRuntime_FourthCoffeeIntegrationRuntime')]",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/', parameters('integrationRuntime_FourthCoffeeIntegrationRuntime'))]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/vanarsdel_rentals')]",
@@ -632,7 +392,6 @@
 						"type": "String"
 					}
 				},
-				"annotations": [],
 				"type": "SqlServerTable",
 				"typeProperties": {
 					"tableName": {
@@ -640,10 +399,7 @@
 						"type": "Expression"
 					}
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/vanarsdel_rentals')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/fourthcoffee_rentals')]",
@@ -659,18 +415,14 @@
 						"type": "String"
 					}
 				},
-				"annotations": [],
 				"type": "FileShare",
 				"typeProperties": {
 					"fileName": {
-						"value": "[parameters('fourthcoffee_rentals_properties_typeProperties_fileName')]",
+						"value": "@dataset().cw_fileName",
 						"type": "Expression"
 					}
 				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/fourthcoffee_rentals')]"
-			]
+			}
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/vanarsdel_copy_rentals')]",
@@ -681,8 +433,6 @@
 					{
 						"name": "copy_rentals",
 						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
 						"typeProperties": {
 							"items": {
 								"value": "@pipeline().parameters.cw_items",
@@ -692,7 +442,6 @@
 								{
 									"name": "copy_data",
 									"type": "Copy",
-									"dependsOn": [],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
@@ -700,7 +449,6 @@
 										"secureOutput": false,
 										"secureInput": false
 									},
-									"userProperties": [],
 									"typeProperties": {
 										"source": {
 											"type": "SqlSource"
@@ -801,8 +549,7 @@
 						"type": "String",
 						"defaultValue": "southridge/vanarsdel"
 					}
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/vanarsdel_rentals')]",
@@ -818,8 +565,6 @@
 					{
 						"name": "copy_rentals",
 						"type": "ForEach",
-						"dependsOn": [],
-						"userProperties": [],
 						"typeProperties": {
 							"items": {
 								"value": "@pipeline().parameters.cw_items",
@@ -829,7 +574,6 @@
 								{
 									"name": "copy_data",
 									"type": "Copy",
-									"dependsOn": [],
 									"policy": {
 										"timeout": "7.00:00:00",
 										"retry": 0,
@@ -837,7 +581,6 @@
 										"secureOutput": false,
 										"secureInput": false
 									},
-									"userProperties": [],
 									"typeProperties": {
 										"source": {
 											"type": "FileSystemSource",
@@ -939,8 +682,7 @@
 						"type": "String",
 						"defaultValue": "southridge/fourthcoffee"
 					}
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/fourthcoffee_rentals')]",
