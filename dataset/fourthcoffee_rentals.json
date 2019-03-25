@@ -1,0 +1,21 @@
+{
+	"name": "fourthcoffee_rentals",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "fourthcoffee_rentals",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_fileName": {
+				"type": "String"
+			}
+		},
+		"type": "FileShare",
+		"typeProperties": {
+			"fileName": {
+				"value": "@dataset().cw_fileName",
+				"type": "Expression"
+			}
+		}
+	}
+}
